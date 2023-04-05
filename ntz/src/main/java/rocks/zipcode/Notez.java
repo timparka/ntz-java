@@ -50,6 +50,10 @@ public final class Notez {
                 ntzEngine.addToCategory("General", argv);
             } else if (argv[0].equals("-c")){
                 ntzEngine.addToCategory(argv[1], argv);
+            } else if (argv[0].equals("-f")) {
+                ntzEngine.remove(argv[1], Integer.parseInt(argv[2]) - 1);
+            } else if (argv[0].equals("-e")) {
+                ntzEngine.edit(argv[1], Integer.parseInt(argv[2]) - 1, argv[3]);
             }
 
             // this should give you an idea about how to TEST the Notez engine
@@ -60,6 +64,22 @@ public final class Notez {
          * what other method calls do you need here to implement the other commands??
          */
 
+    }
+
+    private void edit(String string, int index, String argv) {
+        if (filemap.containsKey(string)) {
+            filemap.get(string).set(index, argv);
+        }
+
+    }
+
+    private void remove(String string, int index) {
+        if (filemap.containsKey(string)) {
+            filemap.get(string).remove(index);
+                if (filemap.get(string).size() == 0) {
+                    filemap.remove(string);
+                }
+        }
     }
 
     private void addToCategory(String string, String[] argv) {
